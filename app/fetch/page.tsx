@@ -17,6 +17,8 @@ async function getUsers() {
 
 const FetchUserPage = async () => {
   const users = await getUsers();
+  console.log(users);
+
   return (
     <div>
       <UserPlaceholder users={users} />

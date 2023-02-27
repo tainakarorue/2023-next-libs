@@ -7,6 +7,7 @@ const UserPlaceholder = ({ users }: { users: any }) => {
       <h1>Users Data</h1>
       {users?.map((user: any, idx: number) => (
         <motion.div
+          key={user.id}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1, transition: { duration: 1, delay: idx } }}
         >
