@@ -17,10 +17,12 @@ export default async function handler(
     const result = await cloudinary.v2.uploader.upload(images[i], {
       folder: "udmec",
     });
+    console.log(result);
+
     imagesLinks.push({
       public_id: result.public_id,
       url: result.secure_url,
     });
   }
-  res.status(200).json({ message: "success" });
+  res.status(200).json({ message: "success", imagesLinks: imagesLinks });
 }

@@ -1,42 +1,49 @@
 "use client";
-import React, { FormEvent, SyntheticEvent, useState } from "react";
-import { CldImage, CldUploadButton } from "next-cloudinary";
+import React, { SyntheticEvent, useState } from "react";
 import Image from "next/image";
-import { Blob } from "buffer";
-import axios from "axios";
 
 const Page = () => {
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault();
     const formData = {
       images,
     };
 
-    const config = {
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
+
+    // const { data } = await axios.post(`/api/upload`, formData, config);
+    const res = await fetch(`/api/upload`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-    };
-
-    const { data } = await axios.post(`/api/upload`, formData, config);
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
     console.log(data);
   };
 
-  const onChange = (e) => {
+  const onChange = (e: any) => {
     const files = Array.from(e.target.files);
 
     setImages([]);
     setImagesPreview([]);
 
-    files.forEach((file) => {
+    files.forEach((file: any) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setImages((oldArray) => [...oldArray, reader.result]);
-          setImagesPreview((oldArray) => [...oldArray, reader.result]);
+          setImages((prevArray) => [...prevArray, reader.result] as never);
+          setImagesPreview(
+            (prevArray) => [...prevArray, reader.result] as never
+          );
         }
       };
       reader.readAsDataURL(file);
@@ -45,30 +52,23 @@ const Page = () => {
 
   return (
     <div>
-      <form
-        className="shadow-lg"
-        encType="multipart/form-data"
-        onSubmit={submitHandler}
-      >
+      <form encType="multipart/form-data" onSubmit={submitHandler}>
         <input
           type="file"
-          name="room_images"
-          className="custom-file-input"
+          name="upload_images"
           id="customFile"
           onChange={onChange}
           multiple
         />
-        <label className="custom-file-label" htmlFor="customFile">
-          Choose Images
-        </label>
+        <label htmlFor="customFile">Choose Images</label>
         {imagesPreview.map((img) => (
-          <img
+          <Image
             src={img}
             key={img}
             alt="Images Preview"
             className="mt-3 mr-2"
-            width="55"
-            height="52"
+            width="100"
+            height="100"
           />
         ))}
         <button type="submit">submit</button>
