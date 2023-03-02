@@ -1,5 +1,5 @@
 "use client";
-import React, { SyntheticEvent, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import Image from "next/image";
 
 const Page = () => {
@@ -30,20 +30,18 @@ const Page = () => {
     console.log(data);
   };
 
-  const onChange = (e: any) => {
-    const files = Array.from(e.target.files);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files as FileList);
 
     setImages([]);
     setImagesPreview([]);
 
-    files.forEach((file: any) => {
+    files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setImages((prevArray) => [...prevArray, reader.result] as never);
-          setImagesPreview(
-            (prevArray) => [...prevArray, reader.result] as never
-          );
+          setImages((prevArray) => [...prevArray, reader.result] as any);
+          setImagesPreview((prevArray) => [...prevArray, reader.result] as any);
         }
       };
       reader.readAsDataURL(file);

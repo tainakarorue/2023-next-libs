@@ -25,7 +25,10 @@ const HooksFormik = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={formik.handleSubmit}
+      className=" flex flex-col items-center gap-2"
+    >
       <label htmlFor="firstName">First Name</label>
       <input
         id="firstName"
@@ -34,9 +37,10 @@ const HooksFormik = () => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.firstName}
+        className="text-gray-900"
       />
       {formik.touched.firstName && formik.errors.firstName ? (
-        <div>{formik.errors.firstName}</div>
+        <div className="text-red-500">{formik.errors.firstName}</div>
       ) : null}
 
       <label htmlFor="lastName">Last Name</label>
@@ -47,9 +51,10 @@ const HooksFormik = () => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.lastName}
+        className="text-gray-900"
       />
       {formik.touched.lastName && formik.errors.lastName ? (
-        <div>{formik.errors.lastName}</div>
+        <div className="text-red-500">{formik.errors.lastName}</div>
       ) : null}
 
       <label htmlFor="email">Email Address</label>
@@ -60,9 +65,10 @@ const HooksFormik = () => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.email}
+        className="text-gray-900"
       />
       {formik.touched.email && formik.errors.email ? (
-        <div>{formik.errors.email}</div>
+        <div className="text-red-500">{formik.errors.email}</div>
       ) : null}
 
       <button type="submit">Submit</button>
