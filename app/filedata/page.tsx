@@ -4,7 +4,6 @@ import Image from "next/image";
 
 const Page = () => {
   const [images, setImages] = useState([]);
-  // const [imagesPreview, setImagesPreview] = useState([]);
 
   const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -12,13 +11,6 @@ const Page = () => {
       images,
     };
 
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
-
-    // const { data } = await axios.post(`/api/upload`, formData, config);
     const res = await fetch(`/api/upload`, {
       method: "POST",
       headers: {
@@ -34,14 +26,12 @@ const Page = () => {
     const files = Array.from(e.target.files as FileList);
 
     // setImages([]);
-    // setImagesPreview([]);
 
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
           setImages((prevArray) => [...prevArray, reader.result] as any);
-          // setImagesPreview((prevArray) => [...prevArray, reader.result] as any);
         }
       };
       reader.readAsDataURL(file);
