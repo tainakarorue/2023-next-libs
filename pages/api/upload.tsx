@@ -12,6 +12,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const images = req.body.images;
+
+  if (images.length === 0) {
+    return res.status(400).json({ message: "images file" });
+  }
+
   let imagesLinks = [];
   for (let i = 0; i < images.length; i++) {
     const result = await cloudinary.v2.uploader.upload(images[i], {

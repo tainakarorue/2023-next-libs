@@ -13,9 +13,6 @@ const Page = () => {
 
     const res = await fetch(`/api/upload`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(formData),
     });
     const data = await res.json();
@@ -48,12 +45,12 @@ const Page = () => {
         <input
           type="file"
           name="upload_images"
-          id="customFile"
+          id="uploadFile"
           onChange={onChange}
           multiple
           accept="image/*"
         />
-        <label htmlFor="customFile">Choose Images</label>
+        <label htmlFor="uploadFile">Choose Images</label>
         <div className="flex flex-wrap gap-2">
           {images.map((img) => (
             <Image
